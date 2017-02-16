@@ -27,7 +27,7 @@ import excute.bean.AccountBean;
  * @author kimC
  *
  */
-public class UrlOutput {
+public class Output {
 
 	/** ファイル入出力ストリーム */
 	FileInputStream filein;
@@ -41,7 +41,7 @@ public class UrlOutput {
 	/**
 	 * コンストラクタ
 	 */
-	public UrlOutput() {
+	public Output() {
 	}
 
 	/**
@@ -87,6 +87,8 @@ public class UrlOutput {
 		b1.setCellValue("WEB診断URL");
 		Cell c1 = row.createCell(2);  // 「C1」
 		c1.setCellValue("登録日付");
+		Cell d1 = row.createCell(3);  // 「D1」
+		d1.setCellValue("ポイント");
 		// セルのスタイル
 		CellStyle style =  workbook.createCellStyle();
 		// フォント
@@ -110,12 +112,15 @@ public class UrlOutput {
 				// 「C_Index」
 				Cell c_index = row_index.createCell(2);
 				c_index.setCellValue(bean.getData());      // 登録日付
+				// 「D_Index」
+				Cell d_index = row_index.createCell(3);
+				d_index.setCellValue(bean.getPoint());     // ポイント
 			}
 		}
 		// ファイル入出力ストリーム
 		FileOutputStream out = null;
 		try {
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("'URL'_yyyyMMdd_HHmmss'.xlsx'");
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("'OUTPUT'_yyyyMMdd_HHmmss'.xlsx'");
 			String fileName = simpleDateFormat.format(new Date(System.currentTimeMillis()));
 			// 出力先のファイルを指定
 			out = new FileOutputStream("excel/" + fileName);

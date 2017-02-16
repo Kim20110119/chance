@@ -18,7 +18,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import common.shindan.WebShindan;
 import excute.bean.AccountBean;
-import excute.excel.UrlOutput;
+import excute.excel.Output;
 
 /**
  * =====================================================================================================================
@@ -49,6 +49,8 @@ public class Chance_Register{
 	List<AccountBean> outputList = new ArrayList<AccountBean>();
 	/** 「登録日付」 */
 	String register_data  = StringUtils.EMPTY;
+	/** 「獲得ポイント」 */
+	String point  = "0";
 
 
 	/**
@@ -95,12 +97,6 @@ public class Chance_Register{
 			if(!this.getShindanList()){
 				this.getShindanList();
 			}
-			// WEB診断URLを設定する
-			bean.setUrl(this.output_shindan_url);
-			// 登録日付を設定する
-			bean.setData(this.register_data);
-			// 出力アカウント情報を設定する
-			outputList.add(bean);
 			for (int shindan_index = start; shindan_index < end; shindan_index++) {
 				// 0.5秒待ち
 				sleep(500);
@@ -114,6 +110,16 @@ public class Chance_Register{
 				// 「WEB診断一覧」
 				driver.get("http://www.chance.com/research/shindan/play.jsp");
 			}
+			// 獲得済みポイントを取得する
+			this.getPoint();
+			// WEB診断URLを設定する
+			bean.setUrl(this.output_shindan_url);
+			// 登録日付を設定する
+			bean.setData(this.register_data);
+			// 獲得済みポイントを設定する
+			bean.setPoint(this.point);
+			// 出力アカウント情報を設定する
+			outputList.add(bean);
 			this.wifiRestart();
 			// ブラウザを終了する
 			driver.quit();
@@ -289,6 +295,29 @@ public class Chance_Register{
 
 	/**
 	 * =================================================================================================================
+	 * チャンスイット：獲得済みポイントを取得する
+	 * =================================================================================================================
+	 *
+	 * @return Boolean 処理結果
+	 *
+	 * @author kimC
+	 *
+	 */
+	public Boolean getPoint() {
+		try {
+			// 3秒待ち
+			sleep(1000);
+			driver.get("http://www.chance.com/");
+			point = driver.findElement(By.className("user_pt")).getText();
+			return Boolean.TRUE;
+		} catch (Exception e) {
+			System.out.println("【エラー】：獲得済みポイントを取得失敗");
+			return Boolean.FALSE;
+		}
+	}
+
+	/**
+	 * =================================================================================================================
 	 * Wifiを再起動する
 	 * =================================================================================================================
 	 *
@@ -318,7 +347,7 @@ public class Chance_Register{
 	 */
 	public void output_account() {
 		try{
-			UrlOutput output = new UrlOutput();
+			Output output = new Output();
 			output.execute(outputList);
 			System.out.println("アカウント出力成功！");
 		}catch (Exception e) {
