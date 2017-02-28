@@ -84,11 +84,13 @@ public class Output {
 		Cell a1 = row.createCell(0);  // 「A1」
 		a1.setCellValue("メールアドレス");
 		Cell b1 = row.createCell(1);  // 「B1」
-		b1.setCellValue("WEB診断URL");
+		b1.setCellValue("パスワード");
 		Cell c1 = row.createCell(2);  // 「C1」
-		c1.setCellValue("登録日付");
+		c1.setCellValue("WEB診断URL");
 		Cell d1 = row.createCell(3);  // 「D1」
-		d1.setCellValue("ポイント");
+		d1.setCellValue("登録日付");
+		Cell e1 = row.createCell(4);  // 「E1」
+		e1.setCellValue("ポイント");
 		// セルのスタイル
 		CellStyle style =  workbook.createCellStyle();
 		// フォント
@@ -98,6 +100,9 @@ public class Output {
 		style.setFont(font);
 		a1.setCellStyle(style);
 		b1.setCellStyle(style);
+		c1.setCellStyle(style);
+		d1.setCellStyle(style);
+		e1.setCellStyle(style);
 		int index = 1;
 		if(list != null){
 			for(AccountBean bean : list){
@@ -108,13 +113,16 @@ public class Output {
 				a_index.setCellValue(bean.getEmail());     // メールアドレス
 				// 「B_Index」
 				Cell b_index = row_index.createCell(1);
-				b_index.setCellValue(bean.getUrl());       // WEB診断URL
+				b_index.setCellValue(bean.getPassword());  // パスワード
 				// 「C_Index」
 				Cell c_index = row_index.createCell(2);
-				c_index.setCellValue(bean.getData());      // 登録日付
+				c_index.setCellValue(bean.getUrl());       // WEB診断URL
 				// 「D_Index」
 				Cell d_index = row_index.createCell(3);
-				d_index.setCellValue(bean.getPoint());     // ポイント
+				d_index.setCellValue(bean.getData());      // 登録日付
+				// 「D_Index」
+				Cell e_index = row_index.createCell(4);
+				e_index.setCellValue(bean.getPoint());     // ポイント
 			}
 		}
 		// ファイル入出力ストリーム

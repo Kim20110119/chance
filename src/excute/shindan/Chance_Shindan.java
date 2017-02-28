@@ -32,7 +32,7 @@ public class Chance_Shindan{
 	/** 「WEB診断開始番号」 */
 	int start = 0;
 	/** 「WEB診断終了番号」 */
-	int end = 3;
+	int end = 40;
 	/** 「アカウントBean」 */
 	AccountBean bean = new AccountBean();
 
