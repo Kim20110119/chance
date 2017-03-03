@@ -123,6 +123,7 @@ public class Output {
 				// 「D_Index」
 				Cell e_index = row_index.createCell(4);
 				e_index.setCellValue(bean.getPoint());     // ポイント
+				index++;
 			}
 		}
 		// ファイル入出力ストリーム
