@@ -87,6 +87,8 @@ public class Chance_Url{
 			if(!this.register()){
 				continue;
 			}
+			// 2秒待ち
+			sleep(2000);
 			// メール確認
 			if(!this.mail_confirm()){
 				continue;
@@ -164,7 +166,7 @@ public class Chance_Url{
 			// 使い捨てメール画面
 			driver.get(MAIL_URL);
 			// 2秒待ち
-			sleep(2000);
+			sleep(10000);
 			// 「他のアカウントにログイン（復元／同期）」をクリック
 			driver.findElement(By.id("link_loginform")).click();
 		    // 「ID」を入力する
@@ -172,7 +174,7 @@ public class Chance_Url{
 		    // 「パスワード」を入力する
 			driver.findElement(By.id("user_password")).sendKeys(MAIL_PASS);
 		    // 1秒待ち
-			sleep(1000);
+			sleep(5000);
 		    // 「ログインする」ボタンのクリック
 			JavascriptExecutor jse = (JavascriptExecutor) driver;
 			jse.executeScript("checkLogin();");
@@ -181,17 +183,17 @@ public class Chance_Url{
 		    // 「確認」をクリックする
 			jse.executeScript("okConfirmDialog();");
 			// 1秒待ち
-			sleep(1000);
+			sleep(5000);
 			driver.switchTo().alert().accept();
 			// 1秒待ち
-			sleep(1000);
+			sleep(5000);
 			driver.switchTo().alert().accept();
 			// 1秒待ち
-			sleep(2000);
+			sleep(10000);
 			// 「受信トレイ」をクリックする
 			jse.executeScript("location.href='recv.php';");
 			// 1秒待ち
-			sleep(1000);
+			sleep(2000);
 			String mail_id = driver.findElements(By.className("ui-listview")).get(1).findElement(By.tagName("li")).getAttribute("id");
 			String mail_num = mail_id.split("_", 0)[2];
 			String mail_detail_url = "https://m.kuku.lu/smphone.app.recv.data.php?UID=6cef1fd801a0985e4cef8d5c7b2c7e35&num=" + mail_num + "&detailmode=1";
