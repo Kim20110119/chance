@@ -163,6 +163,8 @@ public class Chance_Url{
 		try {
 			// 使い捨てメール画面
 			driver.get(MAIL_URL);
+			// 2秒待ち
+			sleep(2000);
 			// 「他のアカウントにログイン（復元／同期）」をクリック
 			driver.findElement(By.id("link_loginform")).click();
 		    // 「ID」を入力する
@@ -185,14 +187,14 @@ public class Chance_Url{
 			sleep(1000);
 			driver.switchTo().alert().accept();
 			// 1秒待ち
-			sleep(1000);
+			sleep(2000);
 			// 「受信トレイ」をクリックする
 			jse.executeScript("location.href='recv.php';");
 			// 1秒待ち
 			sleep(1000);
 			String mail_id = driver.findElements(By.className("ui-listview")).get(1).findElement(By.tagName("li")).getAttribute("id");
 			String mail_num = mail_id.split("_", 0)[2];
-			String mail_detail_url = "https://m.kuku.lu/smphone.app.recv.data.php?UID=7b8dd910ef5598be68ace481984e263c&num=" + mail_num + "&detailmode=1";
+			String mail_detail_url = "https://m.kuku.lu/smphone.app.recv.data.php?UID=6cef1fd801a0985e4cef8d5c7b2c7e35&num=" + mail_num + "&detailmode=1";
 			// メール内容詳細参照用ドライバー
 			WebDriver mail_detail = new ChromeDriver();
 			// メール内容詳細参照へ遷移する

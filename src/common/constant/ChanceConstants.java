@@ -56,16 +56,16 @@ public class ChanceConstants {
 
 	/** 【PC】多数決本日終了メッセージ */
 	public static final String PC_END_MESSAGE = ".*ポイントがもらえる質問がありません！また明日来てね！.*";
-	
+
 	/** 【PC】登録URL */
 	public static final String PC_REGISTER_URL = "https://www.chance.com/member/vcampaign.srv?fid=oDsTwLfUyRQ%3D";
 	/** 【PC】メールURL */
 	public static final String MAIL_URL = "https://m.kuku.lu/index.php";
 	/** 【PC】メールID */
-	public static final String MAIL_ID = "chance_2017";
+	public static final String MAIL_ID = "chance201703";
 	/** 【PC】メールパスワード */
-	public static final String MAIL_PASS = "chance_2017";
-	
+	public static final String MAIL_PASS = "chance201703";
+
 	/**
 	 * =====================================================================================================================
 	 * メール一覧を取得する
@@ -165,7 +165,7 @@ public class ChanceConstants {
 
 		return list;
 	}
-	
+
 	/**
 	 * =====================================================================================================================
 	 * メール一覧を取得する
@@ -266,7 +266,7 @@ public class ChanceConstants {
 
 		return list;
 	}
-	
+
 	/**
 	 * =====================================================================================================================
 	 * ニックネーム一覧を取得する
@@ -276,7 +276,7 @@ public class ChanceConstants {
 	 *
 	 */
 	public static List<String> getNickNameList() {
-		List<String> list=new ArrayList<String>();		
+		List<String> list=new ArrayList<String>();
 		list.add("Mami_Kawana");
 		list.add("tsugio650");
 		list.add("takafumi20250");
@@ -366,7 +366,7 @@ public class ChanceConstants {
 
 		return list;
 	}
-	
+
 	/**
 	 * =====================================================================================================================
 	 * 年一覧を取得する
@@ -466,7 +466,7 @@ public class ChanceConstants {
 
 		return list;
 	}
-	
+
 	/**
 	 * =====================================================================================================================
 	 * 月一覧を取得する
@@ -566,7 +566,7 @@ public class ChanceConstants {
 
 		return list;
 	}
-	
+
 	/**
 	 * =====================================================================================================================
 	 * 日一覧を取得する
@@ -666,6 +666,6 @@ public class ChanceConstants {
 
 		return list;
 	}
-	
+
 
 }
