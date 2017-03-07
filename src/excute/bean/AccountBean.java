@@ -32,6 +32,10 @@ public class AccountBean {
 	private String data;
 	/** ポイント */
 	private String point;
+	/** 開始 */
+	private String start;
+	/** 終了 */
+	private String end;
 
 	/**
 	 * @return メールアドレス
@@ -153,5 +157,30 @@ public class AccountBean {
 	public void setPoint(String point) {
 		this.point = point;
 	}
+	/**
+	 * @return 開始
+	 */
+	public String getStart() {
+		return start;
+	}
+	/**
+	 * @param 開始をセットする
+	 */
+	public void setStart(String start) {
+		this.start = start;
+	}
+	/**
+	 * @return 終了
+	 */
+	public String getEnd() {
+		return end;
+	}
+	/**
+	 * @param 終了をセットする
+	 */
+	public void setEnd(String end) {
+		this.end = end;
+	}
+
 
 }

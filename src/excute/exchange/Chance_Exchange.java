@@ -11,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 
 import excute.bean.AccountBean;
 import excute.excel.Output;
@@ -101,7 +100,7 @@ public class Chance_Exchange{
 			bean.setPoint(this.point);
 			// 出力アカウント情報を設定する
 			outputList.add(bean);
-//			this.wifiRestart();
+			this.wifiRestart();
 			// ブラウザを終了する
 			driver.quit();
 		}
@@ -122,9 +121,11 @@ public class Chance_Exchange{
 		try{
 			// 「募金URL」
 			driver.get("http://www.chance.com/bokin/index.jsp");
-			// 募金ポイントを選択する
-			Select element = new Select(driver.findElement(By.name("point_value")));
-			element.selectByValue("300");
+			// 5秒待ち
+			this.sleep(5000);
+//			// 募金ポイントを選択する
+//			Select element = new Select(driver.findElement(By.name("point_value")));
+//			element.selectByValue("300");
 			// 「寄付する」
 			driver.findElement(By.id("image-btn")).click();
 			// 「OK」
