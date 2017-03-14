@@ -63,14 +63,32 @@ public class Chance_Shindan{
 			// 「WEB診断URL」
 			driver.get(bean.getUrl());
 			for (int i = start; i < end; i++) {
-				// 0.5秒待ち
-				sleep(500);
-				// 診断URL
-				shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(i).getAttribute(A_HREF);
-				// WEB診断
-				driver.get(shindan_url);
-				if (!start()) {
-					restart();
+				try{
+					// 0.5秒待ち
+					sleep(500);
+					// 診断URL
+					shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(i).getAttribute(A_HREF);
+					// WEB診断
+					driver.get(shindan_url);
+					if (!start()) {
+						restart();
+					}
+				}catch (Exception e){
+					try{
+						// 「WEB診断」
+						driver.get(bean.getUrl());
+						// 0.5秒待ち
+						sleep(500);
+						// 診断URL
+						shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(i).getAttribute(A_HREF);
+						// WEB診断
+						driver.get(shindan_url);
+						if (!start()) {
+							restart();
+						}
+					}catch (Exception r_e){
+						System.out.println("【エラー】：WEB診断URLを取得する処理失敗");
+					}
 				}
 				// 「WEB診断」
 				driver.get(bean.getUrl());
