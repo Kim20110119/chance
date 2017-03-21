@@ -109,6 +109,10 @@ public class Proxy_Chance_Exchange{
 				// ログアウト
 				driver.get("http://www.chance.com/member/logout.srv");
 			}catch(Exception e){
+				// ブラウザを終了する
+				driver.quit();
+				// アカウント情報出力する
+				this.output_account();
 			}
 		}
 		// ブラウザを終了する
