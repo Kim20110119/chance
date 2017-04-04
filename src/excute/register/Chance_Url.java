@@ -49,18 +49,27 @@ public class Chance_Url{
 	String register_data  = StringUtils.EMPTY;
 	/** 「獲得ポイント」 */
 	String point  = "0";
+	/** 「ID」 */
+	String id  = "";
+	/** 「パスワード」 */
+	String pass  = "";
+	/** 「UID」 */
+	String uid  = "";
 
 
 	/**
 	 * コンストラクタ
 	 */
-	public Chance_Url() {
+	public Chance_Url(String pId, String pPass, String pUid) {
 		// Chromeドライバーをプロパティへ設定
 		System.setProperty("webdriver.chrome.driver", "lib/chromedriver.exe");
 		// 現在日付
 		Date nowDate = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		register_data = sdf.format(nowDate);
+		this.id = pId;     // ID
+		this.pass = pPass; // パスワード
+		this.uid = pUid;   // UID
 	}
 
 	/**
@@ -170,9 +179,9 @@ public class Chance_Url{
 			// 「他のアカウントにログイン（復元／同期）」をクリック
 			driver.findElement(By.id("link_loginform")).click();
 		    // 「ID」を入力する
-			driver.findElement(By.id("user_number")).sendKeys(MAIL_ID);
+			driver.findElement(By.id("user_number")).sendKeys(this.id);
 		    // 「パスワード」を入力する
-			driver.findElement(By.id("user_password")).sendKeys(MAIL_PASS);
+			driver.findElement(By.id("user_password")).sendKeys(this.pass);
 		    // 2秒待ち
 			sleep(2000);
 		    // 「ログインする」ボタンのクリック
@@ -188,20 +197,20 @@ public class Chance_Url{
 			// 2秒待ち
 			sleep(2000);
 			driver.switchTo().alert().accept();
-			// 2秒待ち
-			sleep(2000);
+			// 5秒待ち
+			sleep(5000);
 			// 「受信トレイ」をクリックする
 			jse.executeScript("location.href='recv.php';");
 			// 1秒待ち
 			sleep(2000);
 			String mail_id = driver.findElements(By.className("ui-listview")).get(1).findElement(By.tagName("li")).getAttribute("id");
 			String mail_num = mail_id.split("_", 0)[2];
-			String mail_detail_url = "https://m.kuku.lu/smphone.app.recv.data.php?UID=6cef1fd801a0985e4cef8d5c7b2c7e35&num=" + mail_num + "&detailmode=1";
+			String mail_detail_url = "https://m.kuku.lu/smphone.app.recv.data.php?UID=" + this.uid + "&num=" + mail_num + "&detailmode=1";
 			// メール内容詳細参照用ドライバー
 			WebDriver mail_detail = new ChromeDriver();
 			// メール内容詳細参照へ遷移する
 			mail_detail.get(mail_detail_url);
-			// 「トラフィック」仮登録用URLを取得する
+			// 「チャンスイット」本登録用URLを取得する
 			String chance_register_url = mail_detail.findElement(By.partialLinkText("https://www.chance.com/member/vcampaign.srv")) .getText();
 			mail_detail.quit();
 			driver.get(chance_register_url);

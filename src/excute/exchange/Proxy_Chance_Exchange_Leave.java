@@ -36,7 +36,7 @@ public class Proxy_Chance_Exchange_Leave{
 		// Chromeドライバーをプロパティへ設定
 		System.setProperty("webdriver.chrome.driver", "lib/chromedriver.exe");
 		ChromeOptions option = new ChromeOptions();
-		option.addArguments("--proxy-server=http://210.140.43.144:8888");
+		option.addArguments("--proxy-server=http://210.140.44.177:8888");
 		option.addArguments("--proxy-bypass-list=localhost");
 		// Chromeドライバー
 		driver = new ChromeDriver(option);
