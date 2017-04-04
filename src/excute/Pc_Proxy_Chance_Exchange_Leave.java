@@ -1,24 +1,24 @@
 package excute;
 
 import excute.excel.Shindan;
-import excute.exchange.Proxy_Chance_Leave;
+import excute.exchange.Proxy_Chance_Exchange_Leave;
 
 /**
  * =====================================================================================================================
- * チャンスイット：退会
+ * チャンスイット：プロキシサーバー募金・退会
  * =====================================================================================================================
  *
  * @author kimC
  *
  */
-public class Pc_Proxy_Chance_Leave {
+public class Pc_Proxy_Chance_Exchange_Leave {
 
 	public static void main(String[] args) {
-		// チャンスイット：退会
-		Proxy_Chance_Leave leave= new Proxy_Chance_Leave();
+		// チャンスイット：プロキシサーバー募金・退会
+		Proxy_Chance_Exchange_Leave leave= new Proxy_Chance_Exchange_Leave();
 		Shindan shindan = new Shindan();
 		leave.execute(shindan.execute());
-		System.out.println("【チャンスイット】退会ポイント終了。");
+		System.out.println("【チャンスイット】プロキシサーバー募金・退会終了。");
 	}
 
 }

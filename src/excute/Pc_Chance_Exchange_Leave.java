@@ -1,24 +1,24 @@
 package excute;
 
 import excute.excel.Shindan;
-import excute.exchange.Proxy_Chance_Exchange;
+import excute.exchange.Chance_Exchange_Leave;
 
 /**
  * =====================================================================================================================
- * チャンスイット：募金
+ * チャンスイット：募金・削除
  * =====================================================================================================================
  *
  * @author kimC
  *
  */
-public class Pc_Proxy_Chance_Exchange {
+public class Pc_Chance_Exchange_Leave {
 
 	public static void main(String[] args) {
-		// チャンスイット：募金
-		Proxy_Chance_Exchange exchange= new Proxy_Chance_Exchange();
+		// チャンスイット：募金・削除
+		Chance_Exchange_Leave cel= new Chance_Exchange_Leave();
 		Shindan shindan = new Shindan();
-		exchange.execute(shindan.execute());
-		System.out.println("【チャンスイット】募金ポイント終了。");
+		cel.execute(shindan.execute());
+		System.out.println("【チャンスイット】募金・削除終了。");
 
 	}
 
