@@ -87,8 +87,8 @@ public class Chance_Url{
 			if(!this.register()){
 				continue;
 			}
-			// 2秒待ち
-			sleep(2000);
+			// 1秒待ち
+			sleep(1000);
 			// メール確認
 			if(!this.mail_confirm()){
 				continue;
@@ -165,16 +165,16 @@ public class Chance_Url{
 		try {
 			// 使い捨てメール画面
 			driver.get(MAIL_URL);
-			// 2秒待ち
-			sleep(10000);
+			// 1.5秒待ち
+			sleep(1500);
 			// 「他のアカウントにログイン（復元／同期）」をクリック
 			driver.findElement(By.id("link_loginform")).click();
 		    // 「ID」を入力する
 			driver.findElement(By.id("user_number")).sendKeys(MAIL_ID);
 		    // 「パスワード」を入力する
 			driver.findElement(By.id("user_password")).sendKeys(MAIL_PASS);
-		    // 1秒待ち
-			sleep(5000);
+		    // 2秒待ち
+			sleep(2000);
 		    // 「ログインする」ボタンのクリック
 			JavascriptExecutor jse = (JavascriptExecutor) driver;
 			jse.executeScript("checkLogin();");
@@ -183,13 +183,13 @@ public class Chance_Url{
 		    // 「確認」をクリックする
 			jse.executeScript("okConfirmDialog();");
 			// 1秒待ち
-			sleep(5000);
+			sleep(1000);
 			driver.switchTo().alert().accept();
-			// 1秒待ち
-			sleep(5000);
+			// 2秒待ち
+			sleep(2000);
 			driver.switchTo().alert().accept();
-			// 1秒待ち
-			sleep(10000);
+			// 2秒待ち
+			sleep(2000);
 			// 「受信トレイ」をクリックする
 			jse.executeScript("location.href='recv.php';");
 			// 1秒待ち
@@ -224,10 +224,11 @@ public class Chance_Url{
 	 */
 	public Boolean getShindanList() {
 		try {
-			// 3秒待ち
+			// 1秒待ち
 			sleep(1000);
 			driver.get("http://www.chance.com/research/shindan/play.jsp");
-			sleep(2000);
+			// 1.5秒待ち
+			sleep(1500);
 			output_shindan_url = driver.getCurrentUrl();
 			return Boolean.TRUE;
 		} catch (Exception e) {
@@ -248,7 +249,7 @@ public class Chance_Url{
 	 */
 	public Boolean getPoint() {
 		try {
-			// 3秒待ち
+			// 1秒待ち
 			sleep(1000);
 			driver.get("http://www.chance.com/");
 			point = driver.findElement(By.className("user_pt")).getText();
@@ -272,7 +273,8 @@ public class Chance_Url{
 			driver.get("http://admin:20110119Jjz@192.168.179.1/index.cgi/reboot_main");
 			driver.findElement(By.id("UPDATE_BUTTON")).click();
 			driver.switchTo().alert().accept();
-			sleep(100000);
+			// 8秒待ち
+			sleep(80000);
 			driver.switchTo().alert().accept();
 			System.out.println("Wifi再起動成功！");
 		}catch (Exception e) {
@@ -301,8 +303,7 @@ public class Chance_Url{
 	/**
 	 * sleep処理
 	 *
-	 * @param long
-	 *            millis
+	 * @param long 秒数
 	 */
 	public void sleep(long millis) {
 		try {
