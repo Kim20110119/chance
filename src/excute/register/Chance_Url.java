@@ -94,12 +94,16 @@ public class Chance_Url{
 			sleep(1500);
 			// 仮登録
 			if(!this.register()){
+				// 出力アカウント情報を設定する
+				outputList.add(bean);
 				continue;
 			}
 			// 1秒待ち
 			sleep(1000);
 			// メール確認
 			if(!this.mail_confirm()){
+				// 出力アカウント情報を設定する
+				outputList.add(bean);
 				continue;
 			}
 			// WEB診断一覧画面
