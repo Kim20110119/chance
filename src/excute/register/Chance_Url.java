@@ -45,6 +45,8 @@ public class Chance_Url{
 	AccountBean bean = new AccountBean();
 	/** 「出力アカウントリスト」 */
 	List<AccountBean> outputList = new ArrayList<AccountBean>();
+	/** 「JavaScript」 */
+	JavascriptExecutor jse;
 	/** 「登録日付」 */
 	String register_data  = StringUtils.EMPTY;
 	/** 「獲得ポイント」 */
@@ -88,6 +90,7 @@ public class Chance_Url{
 			bean = list.get(i);
 			// Chromeドライバー
 			driver = new ChromeDriver();
+			jse = (JavascriptExecutor) driver;
 			// 「登録URL」
 			driver.get(PC_REGISTER_URL);
 			// 1.5秒待ち
@@ -96,6 +99,8 @@ public class Chance_Url{
 			if(!this.register()){
 				// 出力アカウント情報を設定する
 				outputList.add(bean);
+				// ブラウザを終了する
+				driver.quit();
 				continue;
 			}
 			// 1秒待ち
@@ -104,6 +109,8 @@ public class Chance_Url{
 			if(!this.mail_confirm()){
 				// 出力アカウント情報を設定する
 				outputList.add(bean);
+				// ブラウザを終了する
+				driver.quit();
 				continue;
 			}
 			// WEB診断一覧画面
@@ -176,10 +183,35 @@ public class Chance_Url{
 	 */
 	public Boolean mail_confirm() {
 		try {
+			Boolean flag = Boolean.FALSE;
+			// メールログイン処理
+			flag = this.mail_login();
+			if(flag){
+				// メール内容確認処理
+				flag = this.mail_text_confirm();
+			}
+			return flag;
+		} catch (Exception e) {
+			return Boolean.FALSE;
+		}
+	}
+
+	/**
+	 * =================================================================================================================
+	 * チャンスイット：メールログイン
+	 * =================================================================================================================
+	 *
+	 * @return Boolean 処理結果
+	 *
+	 * @author kimC
+	 *
+	 */
+	public Boolean mail_login() {
+		try {
 			// 使い捨てメール画面
 			driver.get(MAIL_URL);
-			// 1.5秒待ち
-			sleep(1500);
+			// 1秒待ち
+			sleep(1000);
 			// 「他のアカウントにログイン（復元／同期）」をクリック
 			driver.findElement(By.id("link_loginform")).click();
 		    // 「ID」を入力する
@@ -189,7 +221,6 @@ public class Chance_Url{
 		    // 2秒待ち
 			sleep(2000);
 		    // 「ログインする」ボタンのクリック
-			JavascriptExecutor jse = (JavascriptExecutor) driver;
 			jse.executeScript("checkLogin();");
 			// 1秒待ち
 			sleep(1000);
@@ -201,17 +232,110 @@ public class Chance_Url{
 			// 2秒待ち
 			sleep(2000);
 			driver.switchTo().alert().accept();
-			// 5秒待ち
-			sleep(5000);
+			return Boolean.TRUE;
+		} catch (Exception e) {
+			try {
+				// 1秒待ち
+				sleep(1000);
+				driver.switchTo().alert().accept();
+				return Boolean.TRUE;
+			}catch(Exception r_e){
+				System.out.println("【エラー】：チャンスイットメールログイン失敗");
+				return Boolean.FALSE;
+			}
+		}
+	}
+
+	/**
+	 * =================================================================================================================
+	 * チャンスイット：メール確認
+	 * =================================================================================================================
+	 *
+	 * @return Boolean 処理結果
+	 *
+	 * @author kimC
+	 *
+	 */
+	public Boolean mail_text_confirm() {
+		try {
+			// 3秒待ち
+			sleep(3000);
 			// 「受信トレイ」をクリックする
 			jse.executeScript("location.href='recv.php';");
 			// 1秒待ち
-			sleep(2000);
-			String mail_id = driver.findElements(By.className("ui-listview")).get(1).findElement(By.tagName("li")).getAttribute("id");
+			sleep(1000);
+			String mail_title = driver.findElements(By.className("ui-listview")).get(1).getText().split("\n")[0];
+			if(mail_title.matches(".*【チャンスイット】仮登録完了のご案内.*")){
+				return this.register_url(1);
+			}else{
+				Boolean flag = Boolean.FALSE;
+				Boolean break_flag = Boolean.FALSE;
+				for(int n = 0; n < 2; n++){
+					for(int i = 2; i < 101; i++){
+						String title = driver.findElements(By.className("ui-listview")).get(i).getText().split("\n")[0];
+						if(title.matches(".*【チャンスイット】仮登録完了のご案内.*")){
+							flag = this.register_url(i);
+							break_flag = Boolean.TRUE;
+							break;
+						}
+					}
+					if(break_flag){
+						break;
+					}else{
+						// 「ALL」
+						driver.findElement(By.xpath("//img[@src='img/chkall.png']")).click();
+						// 「削除」
+						driver.findElement(By.id("link_checkmenu_delele")).click();
+						// 1秒待ち
+						sleep(500);
+						driver.switchTo().alert().accept();
+						// 1秒待ち
+						sleep(1000);
+					}
+				}
+				return flag;
+			}
+
+		} catch (Exception e) {
+			try {
+				// 使い捨てメール画面
+				driver.get(MAIL_URL);
+				// 3秒待ち
+				sleep(3000);
+				// 「受信トレイ」をクリックする
+				jse.executeScript("location.href='recv.php';");
+				// 1秒待ち
+				sleep(1000);
+				String mail_title = driver.findElements(By.className("ui-listview")).get(1).getText().split("\n")[0];
+				if(mail_title.matches(".*【チャンスイット】仮登録完了のご案内.*")){
+					return this.register_url(1);
+				}
+				return Boolean.FALSE;
+			} catch (Exception r_e) {
+				System.out.println("【エラー】：チャンスイットメール確認失敗");
+				return Boolean.FALSE;
+			}
+
+		}
+	}
+
+	/**
+	 * =================================================================================================================
+	 * チャンスイット：メール確認
+	 * =================================================================================================================
+	 *
+	 * @return Boolean 処理結果
+	 *
+	 * @author kimC
+	 *
+	 */
+	public Boolean register_url(int i) {
+		// メール内容詳細参照用ドライバー
+		WebDriver mail_detail = new ChromeDriver();
+		try {
+			String mail_id = driver.findElements(By.className("ui-listview")).get(i).findElement(By.tagName("li")).getAttribute("id");
 			String mail_num = mail_id.split("_", 0)[2];
 			String mail_detail_url = "https://m.kuku.lu/smphone.app.recv.data.php?UID=" + this.uid + "&num=" + mail_num + "&detailmode=1";
-			// メール内容詳細参照用ドライバー
-			WebDriver mail_detail = new ChromeDriver();
 			// メール内容詳細参照へ遷移する
 			mail_detail.get(mail_detail_url);
 			// 「チャンスイット」本登録用URLを取得する
@@ -220,7 +344,7 @@ public class Chance_Url{
 			driver.get(chance_register_url);
 			return Boolean.TRUE;
 		} catch (Exception e) {
-			System.out.println("【エラー】：チャンスイットメール確認失敗");
+			mail_detail.quit();
 			return Boolean.FALSE;
 		}
 	}
@@ -246,29 +370,6 @@ public class Chance_Url{
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			System.out.println("【エラー】：WEB診断一覧画面へ遷移失敗");
-			return Boolean.FALSE;
-		}
-	}
-
-	/**
-	 * =================================================================================================================
-	 * チャンスイット：獲得済みポイントを取得する
-	 * =================================================================================================================
-	 *
-	 * @return Boolean 処理結果
-	 *
-	 * @author kimC
-	 *
-	 */
-	public Boolean getPoint() {
-		try {
-			// 1秒待ち
-			sleep(1000);
-			driver.get("http://www.chance.com/");
-			point = driver.findElement(By.className("user_pt")).getText();
-			return Boolean.TRUE;
-		} catch (Exception e) {
-			System.out.println("【エラー】：獲得済みポイントを取得失敗");
 			return Boolean.FALSE;
 		}
 	}
