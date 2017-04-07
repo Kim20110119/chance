@@ -90,8 +90,8 @@ public class Chance_Url{
 			driver = new ChromeDriver();
 			// 「登録URL」
 			driver.get(PC_REGISTER_URL);
-			// 0.5秒待ち
-			sleep(500);
+			// 1.5秒待ち
+			sleep(1500);
 			// 仮登録
 			if(!this.register()){
 				continue;
@@ -282,8 +282,8 @@ public class Chance_Url{
 			driver.get("http://admin:20110119Jjz@192.168.179.1/index.cgi/reboot_main");
 			driver.findElement(By.id("UPDATE_BUTTON")).click();
 			driver.switchTo().alert().accept();
-			// 8秒待ち
-			sleep(80000);
+			// 12秒待ち
+			sleep(100000);
 			driver.switchTo().alert().accept();
 			System.out.println("Wifi再起動成功！");
 		}catch (Exception e) {
