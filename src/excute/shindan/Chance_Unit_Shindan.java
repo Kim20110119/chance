@@ -71,7 +71,7 @@ public class Chance_Unit_Shindan{
 				end = Integer.valueOf(bean.getEnd());
 			}
 			// 「WEB診断URL」
-			driver.get(bean.getUrl());
+			this.setUrl(bean.getUrl());
 			for (int i = start; i < end; i++) {
 				try {
 					// 0.5秒待ち
@@ -79,14 +79,14 @@ public class Chance_Unit_Shindan{
 					// 診断URL
 					shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(i).getAttribute(A_HREF);
 					// WEB診断
-					driver.get(shindan_url);
+					this.setUrl(shindan_url);
 					if (!start()) {
 						restart();
 					}
 				} catch (Exception e) {
 					try {
 						// 「WEB診断」
-						driver.get(bean.getUrl());
+						this.setUrl(bean.getUrl());
 						// 0.5秒待ち
 						sleep(500);
 						// 診断URL
@@ -101,7 +101,7 @@ public class Chance_Unit_Shindan{
 					}
 				}
 				// 「WEB診断」
-				driver.get(bean.getUrl());
+				this.setUrl(bean.getUrl());
 			}
 			// ブラウザドライバーを終了する
 			driver.quit();
@@ -146,6 +146,25 @@ public class Chance_Unit_Shindan{
 			point_count += 10;
 		} catch (Exception e) {
 			System.out.println("【エラー】：WEB診断再スタート失敗");
+		}
+	}
+
+	/**
+	 * =================================================================================================================
+	 * チャンスイット：URL遷移
+	 * =================================================================================================================
+	 *
+	 * @author kimC
+	 *
+	 */
+	public void setUrl(String url) {
+		try {
+			driver.get(url);
+		} catch (Exception e) {
+			try {
+				driver.get(url);
+			} catch (Exception n_e) {
+			}
 		}
 	}
 
