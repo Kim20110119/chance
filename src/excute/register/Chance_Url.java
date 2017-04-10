@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 
 import excute.bean.AccountBean;
@@ -57,6 +58,8 @@ public class Chance_Url{
 	String pass  = "";
 	/** 「UID」 */
 	String uid  = "";
+	/** 「ユーザーデータパス」 */
+	String user_data_dir  = "C:\\Users\\kim\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1";
 
 
 	/**
@@ -88,8 +91,15 @@ public class Chance_Url{
 		for (int i = 0; i < list.size(); i++) {
 			// アカウントBean
 			bean = list.get(i);
+			// Chromeドライバーオプション
+			ChromeOptions options = new ChromeOptions();
+			// ユーザーデータパスを設定する
+			if(StringUtils.isNotEmpty(bean.getNickname())){
+				this.user_data_dir = bean.getNickname();
+			}
+			options.addArguments("user-data-dir=" + this.user_data_dir);
 			// Chromeドライバー
-			driver = new ChromeDriver();
+			driver = new ChromeDriver(options);
 			jse = (JavascriptExecutor) driver;
 			// 「登録URL」
 			driver.get(PC_REGISTER_URL);

@@ -55,7 +55,10 @@ public class Chance_Unit_Shindan{
 	 *
 	 */
 	public Integer execute(List<AccountBean> list) {
-
+		// Chromeドライバー
+		driver = new ChromeDriver();
+		// 10秒待ち
+		sleep(10000);
 		for (int account_index = 0; account_index < list.size(); account_index++) {
 			// アカウントBean
 			bean = list.get(account_index);
@@ -67,8 +70,6 @@ public class Chance_Unit_Shindan{
 			if(StringUtils.isNotEmpty(bean.getEnd())){
 				end = Integer.valueOf(bean.getEnd());
 			}
-			// Chromeドライバー
-			driver = new ChromeDriver();
 			// 「WEB診断URL」
 			driver.get(bean.getUrl());
 			for (int i = start; i < end; i++) {
