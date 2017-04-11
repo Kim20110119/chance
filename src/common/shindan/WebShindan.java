@@ -37,7 +37,7 @@ public class WebShindan {
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
 		// 「次へ」
 		driver.findElement(By.className(C_SUBMINT)).click();
-		// 2秒待ち
+		// 1.5秒待ち
 		Thread.sleep(1500);
 		// 「次へ」
 		driver.findElement(By.className(C_SUBMINT)).click();
@@ -68,10 +68,12 @@ public class WebShindan {
 				break;
 			}
 		}
+		// 1.5秒待ち
+		Thread.sleep(2500);
 		// 「ポイント獲得」
 		driver.findElement(By.className(C_END)).click();
-		// 2秒待ち
-		Thread.sleep(1500);
+		// 1秒待ち
+		Thread.sleep(1000);
 		// 「アラート」
 		driver.switchTo().alert().accept();
 		// 「診断処理結果」

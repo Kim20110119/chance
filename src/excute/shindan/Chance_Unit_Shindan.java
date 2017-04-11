@@ -25,8 +25,10 @@ public class Chance_Unit_Shindan{
 	WebDriver driver;
 	/** 「診断URL」 */
 	String shindan_url  = StringUtils.EMPTY;
-	/** 「獲得ポイント」 */
-	int point_count = 0;
+	/** 「診断一覧URL」 */
+	String shindan_list_url  = StringUtils.EMPTY;
+	/** 「ユーザーパス」 */
+	String user_path  = StringUtils.EMPTY;
 	/** 「再スタートフラグ」 */
 	Boolean restart_flag = Boolean.FALSE;
 	/** 「WEB診断開始番号」 */
@@ -35,9 +37,12 @@ public class Chance_Unit_Shindan{
 	int end = 33;
 	/** 「アカウントBean」 */
 	AccountBean bean = new AccountBean();
+	/** 「WEB診断Index」 */
+	int index = 0;
 
 	/**
 	 * コンストラクタ
+	 * @param String path パス
 	 */
 	public Chance_Unit_Shindan() {
 		// Chromeドライバーをプロパティへ設定
@@ -55,10 +60,6 @@ public class Chance_Unit_Shindan{
 	 *
 	 */
 	public Integer execute(List<AccountBean> list) {
-		// Chromeドライバー
-		driver = new ChromeDriver();
-		// 10秒待ち
-		sleep(10000);
 		for (int account_index = 0; account_index < list.size(); account_index++) {
 			// アカウントBean
 			bean = list.get(account_index);
@@ -70,43 +71,34 @@ public class Chance_Unit_Shindan{
 			if(StringUtils.isNotEmpty(bean.getEnd())){
 				end = Integer.valueOf(bean.getEnd());
 			}
-			// 「WEB診断URL」
-			this.setUrl(bean.getUrl());
+			// Chromeドライバーオプション
+			driver = new ChromeDriver();
+			// 「WEB診断URL」を取得する
+			this.shindan_list_url = bean.getUrl();
+			// WEB診断一覧へ遷移する
+			this.setUrl(this.shindan_list_url);
+			// WEB診断開始
 			for (int i = start; i < end; i++) {
+				this.index = i;
 				try {
 					// 0.5秒待ち
 					sleep(500);
 					// 診断URL
-					shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(i).getAttribute(A_HREF);
+					this.shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(i).getAttribute(A_HREF);
 					// WEB診断
-					this.setUrl(shindan_url);
+					this.setUrl(this.shindan_url);
 					if (!start()) {
 						restart();
 					}
 				} catch (Exception e) {
-					try {
-						// 「WEB診断」
-						this.setUrl(bean.getUrl());
-						// 0.5秒待ち
-						sleep(500);
-						// 診断URL
-						shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(i).getAttribute(A_HREF);
-						// WEB診断
-						driver.get(shindan_url);
-						if (!start()) {
-							restart();
-						}
-					} catch (Exception r_e) {
-						System.out.println("【エラー】：WEB診断URLを取得する処理失敗");
-					}
 				}
-				// 「WEB診断」
-				this.setUrl(bean.getUrl());
+				// 「WEB診断一覧」
+				driver.get(this.shindan_list_url);
 			}
 			// ブラウザドライバーを終了する
 			driver.quit();
 			}
-		return point_count;
+		return 0;
 
 	}
 
@@ -121,10 +113,8 @@ public class Chance_Unit_Shindan{
 	public Boolean start() {
 		try {
 			WebShindan.execute(driver);
-			point_count += 10;
 			return Boolean.TRUE;
 		} catch (Exception e) {
-			System.out.println("【エラー】：WEB診断失敗");
 			return Boolean.FALSE;
 		}
 
@@ -140,12 +130,33 @@ public class Chance_Unit_Shindan{
 	 */
 	public void restart() {
 		try {
-			// WEB診断
-			driver.get(shindan_url);
-			WebShindan.execute(driver);
-			point_count += 10;
+			for(int i = 0; i < 3; i++){
+				// WEB診断一覧画面
+				driver.get(this.shindan_list_url);
+				// 診断URL
+				this.shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(index).getAttribute(A_HREF);
+				// WEB診断
+				this.setUrl(this.shindan_url);
+				if(this.start()){
+					System.out.println("【情報】：WEB診断再スタート成功！！！");
+					break;
+				}
+			}
 		} catch (Exception e) {
-			System.out.println("【エラー】：WEB診断再スタート失敗");
+			try {
+				// WEB診断一覧画面
+				driver.get(this.shindan_list_url);
+				// 1秒待ち
+				sleep(1000);
+				// 診断URL
+				this.shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(index).getAttribute(A_HREF);
+				// WEB診断
+				this.setUrl(this.shindan_url);
+				WebShindan.execute(driver);
+				System.out.println("【情報】：WEB診断再スタート成功！！！");
+			} catch (Exception r_e) {
+				System.out.println("【エラー】：WEB診断再スタート失敗");
+			}
 		}
 	}
 
