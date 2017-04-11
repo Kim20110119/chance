@@ -93,7 +93,7 @@ public class Chance_Unit_Shindan{
 				} catch (Exception e) {
 				}
 				// 「WEB診断一覧」
-				driver.get(this.shindan_list_url);
+				this.setUrl(this.shindan_list_url);
 			}
 			// ブラウザドライバーを終了する
 			driver.quit();
@@ -111,13 +111,7 @@ public class Chance_Unit_Shindan{
 	 *
 	 */
 	public Boolean start() {
-		try {
-			WebShindan.execute(driver);
-			return Boolean.TRUE;
-		} catch (Exception e) {
-			return Boolean.FALSE;
-		}
-
+		return WebShindan.execute(driver);
 	}
 
 	/**
@@ -132,7 +126,7 @@ public class Chance_Unit_Shindan{
 		try {
 			for(int i = 0; i < 3; i++){
 				// WEB診断一覧画面
-				driver.get(this.shindan_list_url);
+				this.setUrl(this.shindan_list_url);
 				// 診断URL
 				this.shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(index).getAttribute(A_HREF);
 				// WEB診断
@@ -143,19 +137,23 @@ public class Chance_Unit_Shindan{
 				}
 			}
 		} catch (Exception e) {
+			// WEB診断一覧画面
+			this.setUrl(this.shindan_list_url);
 			try {
-				// WEB診断一覧画面
-				driver.get(this.shindan_list_url);
 				// 1秒待ち
 				sleep(1000);
 				// 診断URL
 				this.shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(index).getAttribute(A_HREF);
 				// WEB診断
 				this.setUrl(this.shindan_url);
-				WebShindan.execute(driver);
-				System.out.println("【情報】：WEB診断再スタート成功！！！");
+				if(WebShindan.execute(driver)){
+					System.out.println("【情報】：WEB診断再スタート成功！！！");
+				}else{
+					System.out.println("【エラー】：WEB診断再スタート失敗");
+				}
 			} catch (Exception r_e) {
-				System.out.println("【エラー】：WEB診断再スタート失敗");
+				// WEB診断一覧画面
+				this.setUrl(this.shindan_list_url);
 			}
 		}
 	}
