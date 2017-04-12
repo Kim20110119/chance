@@ -8,7 +8,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import common.shindan.WebShindan;
 import excute.bean.AccountBean;
 import excute.excel.Output;
 
@@ -59,6 +58,8 @@ public class Chance_Shindan_Confirm{
 	public Integer execute(List<AccountBean> list) {
 		// Chromeドライバー
 		driver = new ChromeDriver();
+		// Chrome画像表示の設定
+		this.setImage();
 		for (int account_index = 0; account_index < list.size(); account_index++) {
 			// アカウントBean
 			bean = list.get(account_index);
@@ -79,40 +80,19 @@ public class Chance_Shindan_Confirm{
 
 	/**
 	 * =================================================================================================================
-	 * チャンスイット：WEB診断スタート
+	 * Chromeの設定：すべての画像を表示しない
 	 * =================================================================================================================
 	 *
 	 * @author kimC
 	 *
 	 */
-	public Boolean start() {
-		try {
-			WebShindan.execute(driver);
-			point_count += 10;
-			return Boolean.TRUE;
-		} catch (Exception e) {
-			System.out.println("【エラー】：WEB診断失敗");
-			return Boolean.FALSE;
-		}
+	public void setImage() {
+		try{
+			driver.get("chrome://settings-frame/content");
+			driver.findElements(By.name("images")).get(1).click();
+			driver.findElement(By.id("content-settings-overlay-confirm")).click();
+		}catch (Exception e){
 
-	}
-
-	/**
-	 * =================================================================================================================
-	 * チャンスイット：WEB診断再スタート
-	 * =================================================================================================================
-	 *
-	 * @author kimC
-	 *
-	 */
-	public void restart() {
-		try {
-			// WEB診断
-			driver.get(shindan_url);
-			WebShindan.execute(driver);
-			point_count += 10;
-		} catch (Exception e) {
-			System.out.println("【エラー】：WEB診断再スタート失敗");
 		}
 	}
 

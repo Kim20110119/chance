@@ -373,6 +373,8 @@ public class Chance_Url{
 		try {
 			// 1秒待ち
 			sleep(1000);
+			// Chromeの画像表示設定
+			this.setImage();
 			driver.get("http://www.chance.com/research/shindan/play.jsp");
 			// 1.5秒待ち
 			sleep(1500);
@@ -381,6 +383,24 @@ public class Chance_Url{
 		} catch (Exception e) {
 			System.out.println("【エラー】：WEB診断一覧画面へ遷移失敗");
 			return Boolean.FALSE;
+		}
+	}
+
+	/**
+	 * =================================================================================================================
+	 * Chromeの設定：すべての画像を表示しない
+	 * =================================================================================================================
+	 *
+	 * @author kimC
+	 *
+	 */
+	public void setImage() {
+		try{
+			driver.get("chrome://settings-frame/content");
+			driver.findElements(By.name("images")).get(1).click();
+			driver.findElement(By.id("content-settings-overlay-confirm")).click();
+		}catch (Exception e){
+
 		}
 	}
 

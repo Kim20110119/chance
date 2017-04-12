@@ -73,6 +73,8 @@ public class Chance_Unit_Shindan{
 			}
 			// Chromeドライバーオプション
 			driver = new ChromeDriver();
+			// Chromeの画像表示設定
+			this.setImage();
 			// 「WEB診断URL」を取得する
 			this.shindan_list_url = bean.getUrl();
 			// WEB診断一覧へ遷移する
@@ -97,9 +99,28 @@ public class Chance_Unit_Shindan{
 			}
 			// ブラウザドライバーを終了する
 			driver.quit();
-			}
+		}
+
 		return 0;
 
+	}
+
+	/**
+	 * =================================================================================================================
+	 * Chromeの設定：すべての画像を表示しない
+	 * =================================================================================================================
+	 *
+	 * @author kimC
+	 *
+	 */
+	public void setImage() {
+		try{
+			driver.get("chrome://settings-frame/content");
+			driver.findElements(By.name("images")).get(1).click();
+			driver.findElement(By.id("content-settings-overlay-confirm")).click();
+		}catch (Exception e){
+
+		}
 	}
 
 	/**
