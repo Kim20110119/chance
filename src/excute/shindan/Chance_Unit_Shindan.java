@@ -86,7 +86,8 @@ public class Chance_Unit_Shindan{
 					// 0.5秒待ち
 					sleep(500);
 					// 診断URL
-					this.shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(i).getAttribute(A_HREF);
+					String url = driver.findElements(By.xpath("//a[@role='button']")).get(i).getAttribute(A_HREF);
+					this.shindan_url = url.replace("start?&", "step?=undefined&");
 					// WEB診断
 					this.setUrl(this.shindan_url);
 					if (!start()) {
@@ -125,6 +126,23 @@ public class Chance_Unit_Shindan{
 
 	/**
 	 * =================================================================================================================
+	 * WEB診断URLを取得する
+	 * =================================================================================================================
+	 *
+	 * @author kimC
+	 *
+	 */
+	public void getShidanUrl() {
+		try{
+
+		}catch (Exception e){
+
+		}
+	}
+
+
+	/**
+	 * =================================================================================================================
 	 * チャンスイット：WEB診断スタート
 	 * =================================================================================================================
 	 *
@@ -149,7 +167,8 @@ public class Chance_Unit_Shindan{
 				// WEB診断一覧画面
 				this.setUrl(this.shindan_list_url);
 				// 診断URL
-				this.shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(index).getAttribute(A_HREF);
+				String url = driver.findElements(By.xpath("//a[@role='button']")).get(index).getAttribute(A_HREF);
+				this.shindan_url = url.replace("start?&", "step?=undefined&");
 				// WEB診断
 				this.setUrl(this.shindan_url);
 				if(this.start()){
@@ -164,7 +183,8 @@ public class Chance_Unit_Shindan{
 				// 1秒待ち
 				sleep(1000);
 				// 診断URL
-				this.shindan_url = driver.findElements(By.xpath("//a[@role='button']")).get(index).getAttribute(A_HREF);
+				String url = driver.findElements(By.xpath("//a[@role='button']")).get(index).getAttribute(A_HREF);
+				this.shindan_url = url.replace("start?&", "step?=undefined&");
 				// WEB診断
 				this.setUrl(this.shindan_url);
 				if(WebShindan.execute(driver)){

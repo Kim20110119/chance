@@ -16,7 +16,6 @@ import org.openqa.selenium.WebDriver;
  */
 public class WebShindan {
 
-	private static final String C_SUBMINT = "submit-btn";
 	private static final String C_END = "end-btn";
 
 	/**
@@ -24,10 +23,7 @@ public class WebShindan {
 	 * WEB診断処理
 	 * =================================================================================================================
 	 *
-	 * @param WebDriver
-	 *            driver
-	 * @param String
-	 *            url
+	 * @param WebDriver driver
 	 *
 	 * @author kimC
 	 *
@@ -36,14 +32,8 @@ public class WebShindan {
 		try {
 			/** JavaScript */
 			JavascriptExecutor executor = (JavascriptExecutor)driver;
-			// 「次へ」
-			driver.findElement(By.className(C_SUBMINT)).click();
-			// 1.5秒待ち
-			Thread.sleep(1500);
-			// 「次へ」
-			driver.findElement(By.className(C_SUBMINT)).click();
-			// 1秒待ち
-			Thread.sleep(1000);
+			// 0.5秒待ち
+			Thread.sleep(500);
 			// 「診断質問」
 			executor.executeScript("$('#group-2').toggleClass('dia-invisible');");
 			executor.executeScript("$('#group-3').toggleClass('dia-invisible');");
@@ -69,21 +59,109 @@ public class WebShindan {
 					break;
 				}
 			}
-			// 1.5秒待ち
-			Thread.sleep(2500);
+			// 「診断処理結果」
+			return getPoint(driver);
+		} catch (Exception e) {
+			// 「診断処理結果」
+			return Boolean.FALSE;
+		}
+	}
+
+	/**
+	 * =================================================================================================================
+	 * ポイント獲得処理
+	 * =================================================================================================================
+	 *
+	 * @param WebDriver driver
+	 *
+	 * @author kimC
+	 *
+	 */
+	public static Boolean getPoint(WebDriver driver){
+		try {
+			// 0.5秒待ち
+			Thread.sleep(500);
 			// 「ポイント獲得」
 			driver.findElement(By.className(C_END)).click();
 			// 1秒待ち
-			Thread.sleep(1000);
-			// 「アラート」
-			driver.switchTo().alert().accept();
+			Thread.sleep(500);
+			// 獲得済みチェック
+			if(check(driver)){
+				try {
+					// 「アラート」
+					driver.switchTo().alert().accept();
+				} catch (Exception e) {
+				}
+				// 0.5秒待ち
+				Thread.sleep(5000);
+				// 「ポイント獲得」
+				driver.findElement(By.className(C_END)).click();
+				// 0.5秒待ち
+				Thread.sleep(500);
+				try {
+					// 「アラート」
+					driver.switchTo().alert().accept();
+				} catch (Exception e) {
+				}
+			}else{
+				try {
+					// 「アラート」
+					driver.switchTo().alert().accept();
+				} catch (Exception e) {
+				}
+			}
+
 			// 「診断処理結果」
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			// 「診断処理結果」
 			return Boolean.FALSE;
 		}
+	}
 
+	/**
+	 * =================================================================================================================
+	 * ポイント獲得エラーにより「送信中...」の場合対応処理
+	 * =================================================================================================================
+	 *
+	 * @param WebDriver driver
+	 *
+	 * @author kimC
+	 *
+	 */
+	public static Boolean check(WebDriver driver){
+		try {
+			// 「アラート」
+			driver.switchTo().alert().accept();
+		} catch (Exception e) {
+		}
+		try {
+			try {
+				// 「アラート」
+				driver.switchTo().alert().accept();
+			} catch (Exception e) {
+			}
+			int size = driver.findElements(By.className(C_END)).size();
+			if(size > 0){
+				String text = driver.findElement(By.className(C_END)).getText();
+				if(text.equals("送信中...")){
+					// 1秒待ち
+					Thread.sleep(4500);
+					try {
+						// 「アラート」
+						driver.switchTo().alert().accept();
+					} catch (Exception e) {
+					}
+					return Boolean.TRUE;
+				}else{
+					return Boolean.FALSE;
+				}
+			}else{
+				return Boolean.FALSE;
+			}
+		} catch (Exception e) {
+			return Boolean.TRUE;
+		}
 	}
 
 }
