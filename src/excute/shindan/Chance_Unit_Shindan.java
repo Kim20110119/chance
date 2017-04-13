@@ -78,7 +78,7 @@ public class Chance_Unit_Shindan{
 			driver = new ChromeDriver();
 			// Chromeの画像表示設定
 			if(this.image_flag.equals("1")){
-				this.setImage();	
+				this.setImage();
 			}
 			// 「WEB診断URL」を取得する
 			this.shindan_list_url = bean.getUrl();
@@ -168,7 +168,7 @@ public class Chance_Unit_Shindan{
 	 */
 	public void restart() {
 		try {
-			for(int i = 0; i < 3; i++){
+			for(int i = 0; i < 5; i++){
 				// WEB診断一覧画面
 				this.setUrl(this.shindan_list_url);
 				// 診断URL
@@ -177,7 +177,6 @@ public class Chance_Unit_Shindan{
 				// WEB診断
 				this.setUrl(this.shindan_url);
 				if(this.start()){
-					System.out.println("【情報】：WEB診断再スタート成功！！！");
 					break;
 				}
 			}
@@ -193,11 +192,11 @@ public class Chance_Unit_Shindan{
 				// WEB診断
 				this.setUrl(this.shindan_url);
 				if(WebShindan.execute(driver)){
-					System.out.println("【情報】：WEB診断再スタート成功！！！");
 				}else{
 					System.out.println("【エラー】：WEB診断再スタート失敗");
 				}
 			} catch (Exception r_e) {
+				System.out.println("【エラー】：WEB診断再スタート失敗");
 				// WEB診断一覧画面
 				this.setUrl(this.shindan_list_url);
 			}
