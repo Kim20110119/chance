@@ -13,7 +13,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 
 import excute.bean.AccountBean;
@@ -58,8 +57,6 @@ public class Chance_Url{
 	String pass  = "";
 	/** 「UID」 */
 	String uid  = "";
-	/** 「ユーザーデータパス」 */
-	String user_data_dir  = "C:\\Users\\kim\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1";
 
 
 	/**
@@ -91,15 +88,8 @@ public class Chance_Url{
 		for (int i = 0; i < list.size(); i++) {
 			// アカウントBean
 			bean = list.get(i);
-			// Chromeドライバーオプション
-			ChromeOptions options = new ChromeOptions();
-			// ユーザーデータパスを設定する
-			if(StringUtils.isNotEmpty(bean.getNickname())){
-				this.user_data_dir = bean.getNickname();
-			}
-			options.addArguments("user-data-dir=" + this.user_data_dir);
 			// Chromeドライバー
-			driver = new ChromeDriver(options);
+			driver = new ChromeDriver();
 			jse = (JavascriptExecutor) driver;
 			// 「登録URL」
 			driver.get(PC_REGISTER_URL);
@@ -373,8 +363,6 @@ public class Chance_Url{
 		try {
 			// 1秒待ち
 			sleep(1000);
-			// Chromeの画像表示設定
-			this.setImage();
 			driver.get("http://www.chance.com/research/shindan/play.jsp");
 			// 1.5秒待ち
 			sleep(1500);
@@ -383,24 +371,6 @@ public class Chance_Url{
 		} catch (Exception e) {
 			System.out.println("【エラー】：WEB診断一覧画面へ遷移失敗");
 			return Boolean.FALSE;
-		}
-	}
-
-	/**
-	 * =================================================================================================================
-	 * Chromeの設定：すべての画像を表示しない
-	 * =================================================================================================================
-	 *
-	 * @author kimC
-	 *
-	 */
-	public void setImage() {
-		try{
-			driver.get("chrome://settings-frame/content");
-			driver.findElements(By.name("images")).get(1).click();
-			driver.findElement(By.id("content-settings-overlay-confirm")).click();
-		}catch (Exception e){
-
 		}
 	}
 
