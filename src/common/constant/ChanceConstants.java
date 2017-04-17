@@ -59,6 +59,28 @@ public class ChanceConstants {
 
 	/** 【PC】登録URL */
 	public static final String PC_REGISTER_URL = "https://www.chance.com/member/vcampaign.srv?fid=oDsTwLfUyRQ%3D";
+	/** 【PC】登録URL */
+	public static final String PC_REGISTER_URL_0 = "https://www.chance.com/member/vcampaign.srv?fid=v9hdA%2FfMXKI%3D";
+	/** 【PC】登録URL */
+	public static final String PC_REGISTER_URL_1 = "https://www.chance.com/member/vcampaign.srv?fid=a2Zwi%2F0mYPg%3D";
+	/** 【PC】登録URL */
+	public static final String PC_REGISTER_URL_2 = "https://www.chance.com/member/vcampaign.srv?fid=2D0oH6ePayk%3D";
+	/** 【PC】登録URL */
+	public static final String PC_REGISTER_URL_3 = "https://www.chance.com/member/vcampaign.srv?fid=2Owtcs3qhbY%3D";
+	/** 【PC】登録URL */
+	public static final String PC_REGISTER_URL_4 = "https://www.chance.com/member/vcampaign.srv?fid=YwmLqPPU4B4%3D";
+	/** 【PC】登録URL */
+	public static final String PC_REGISTER_URL_5 = "https://www.chance.com/member/vcampaign.srv?fid=3UGOamEcayQ%3D";
+	/** 【PC】登録URL */
+	public static final String PC_REGISTER_URL_6 = "https://www.chance.com/member/vcampaign.srv?fid=%2FhCojmXzHDo%3D";
+	/** 【PC】登録URL */
+	public static final String PC_REGISTER_URL_7 = "https://www.chance.com/member/vcampaign.srv?fid=%2Bi3WxNcLsZ8%3D";
+	/** 【PC】登録URL */
+	public static final String PC_REGISTER_URL_8 = "https://www.chance.com/member/vcampaign.srv?fid=QjNRscnlgaU%3D";
+	/** 【PC】登録URL */
+	public static final String PC_REGISTER_URL_9 = "https://www.chance.com/member/vcampaign.srv?fid=TmKgZpIqsSo%3D";
+	/** 【PC】登録URL */
+	public static final String PC_REGISTER_URL_10 = "https://www.chance.com/member/vcampaign.srv?fid=grsvi1hMoFg%3D";
 	/** 【PC】メールURL */
 	public static final String MAIL_URL = "https://m.kuku.lu/index.php";
 	/** 【PC】メールID */

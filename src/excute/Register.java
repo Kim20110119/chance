@@ -1,7 +1,7 @@
 package excute;
 
-import excute.excel.Register;
-import excute.register.Chance_Url;
+import excute.excel.Excel;
+import excute.register.Chance;
 
 /**
  * =====================================================================================================================
@@ -11,13 +11,13 @@ import excute.register.Chance_Url;
  * @author kimC
  *
  */
-public class Register_Url {
+public class Register {
 
 	public static void main(String[] args) {
 		// チャンスイット：新規登録し、WEB診断URLを取得
-		Chance_Url chance_url= new Chance_Url(args[0], args[1], args[2]);
-		Register register = new Register();
-		chance_url.execute(register.execute());
+		Chance chance= new Chance(args[0], args[1], args[2]);
+		Excel excel = new Excel();
+		chance.execute(excel.execute("register_01"));
 		System.out.println("【チャンスイット】新規登録し、WEB診断URLを取得処理完了しました。");
 
 	}

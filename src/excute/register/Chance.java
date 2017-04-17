@@ -27,7 +27,7 @@ import excute.excel.Output_Excel;
  * @author kimC
  *
  */
-public class Register{
+public class Chance{
 	/** 「WEBドライバー」 */
 	WebDriver driver;
 	/** 「診断URL」 */
@@ -63,7 +63,7 @@ public class Register{
 	/**
 	 * コンストラクタ
 	 */
-	public Register(String pId, String pPass, String pUid) {
+	public Chance(String pId, String pPass, String pUid) {
 		// Chromeドライバーをプロパティへ設定
 		System.setProperty("webdriver.chrome.driver", "lib/chromedriver.exe");
 		// 現在日付
@@ -93,7 +93,13 @@ public class Register{
 			driver = new ChromeDriver();
 			jse = (JavascriptExecutor) driver;
 			// 「登録URL」
-			driver.get(PC_REGISTER_URL);
+			if(i == 0){
+				driver.get(PC_REGISTER_URL);
+			}else if(i == 41){
+				driver.get(PC_REGISTER_URL_1);
+			}else if(i == 81){
+				driver.get(PC_REGISTER_URL_2);
+			}
 			// 1.5秒待ち
 			sleep(1500);
 			// 仮登録
@@ -129,11 +135,13 @@ public class Register{
 			driver.quit();
 			if(i == 40){
 				// アカウント情報出力する
-				this.output_account(this.outputList,"");
+				this.output_account(this.outputList, String.valueOf(1));
 			}else if(i == 80){
-
+				// アカウント情報出力する
+				this.output_account(this.outputList, String.valueOf(2));
 			}else if(i == (list.size() - 1)){
-
+				// アカウント情報出力する
+				this.output_account(this.outputList, String.valueOf(3));
 			}
 
 		}
@@ -381,6 +389,27 @@ public class Register{
 		} catch (Exception e) {
 			System.out.println("【エラー】：WEB診断一覧画面へ遷移失敗");
 			return Boolean.FALSE;
+		}
+	}
+	
+	/**
+	 * =================================================================================================================
+	 * 出力するファイル名を取得する
+	 * =================================================================================================================
+	 *
+	 * @return String ファイル名
+	 *
+	 * @author kimC
+	 *
+	 */
+	public String getFileName(String index) {
+		try {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+			String ymd = simpleDateFormat.format(new Date(System.currentTimeMillis()));
+			return "OUTPUT_"+ymd+"_"+index;
+		} catch (Exception e) {
+			System.out.println("【エラー】：WEB診断一覧画面へ遷移失敗");
+			return "OUTPUT_01";
 		}
 	}
 
