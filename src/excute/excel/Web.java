@@ -53,7 +53,7 @@ public class Web {
 			filein = new FileInputStream("excel/" + fileName + ".xlsx");
 			workbook = new XSSFWorkbook(filein);
 			// 「データ」シート
-			sheet = workbook.getSheet("データ");
+			sheet = workbook.getSheet("アカウント");
 			Iterator<Row> rows = sheet.rowIterator();
 			int index = 0;
 			while(rows.hasNext()) {
@@ -86,7 +86,12 @@ public class Web {
 					bean.setSex(this.getCellValue(cell_6));
 					// WEB診断URL
 					Cell cell_7 = row.getCell(7);
-					bean.setUrl(this.getCellValue(cell_7));
+					String url = this.getCellValue(cell_7);
+					if(url.matches(".*http://syouhisya-kinyu.com/chanceit.*")){
+						bean.setUrl(url);
+					}else{
+						continue;
+					}
 					// 開始
 					Cell cell_8 = row.getCell(8);
 					bean.setStart(this.getCellValue(cell_8));

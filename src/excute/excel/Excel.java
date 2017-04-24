@@ -87,6 +87,12 @@ public class Excel {
 					// WEB診断URL
 					Cell cell_7 = row.getCell(7);
 					bean.setUrl(this.getCellValue(cell_7));
+					// 開始
+					Cell cell_8 = row.getCell(8);
+					bean.setStart(this.getCellValue(cell_8));
+					// 終了
+					Cell cell_9 = row.getCell(9);
+					bean.setEnd(this.getCellValue(cell_9));
 					// アカウント情報リスト
 					list.add(bean);
 				}

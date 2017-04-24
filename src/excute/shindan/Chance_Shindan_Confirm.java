@@ -107,7 +107,7 @@ public class Chance_Shindan_Confirm{
 	public void output_account() {
 		try{
 			Output output = new Output();
-			output.execute(outputList);
+			output.execute(outputList,0);
 			System.out.println("アカウント・WEB診断URL出力成功！");
 		}catch (Exception e) {
 			System.out.println("【エラー】：アカウント・WEB診断URL出力失敗！");

@@ -44,7 +44,17 @@ public class Chance_Url{
 	/** 「アカウントBean」 */
 	AccountBean bean = new AccountBean();
 	/** 「出力アカウントリスト」 */
-	List<AccountBean> outputList = new ArrayList<AccountBean>();
+	List<AccountBean> outputList1 = new ArrayList<AccountBean>();
+	/** 「出力アカウントリスト」 */
+	List<AccountBean> outputList2 = new ArrayList<AccountBean>();
+	/** 「出力アカウントリスト」 */
+	List<AccountBean> outputList3 = new ArrayList<AccountBean>();
+	/** 「出力アカウントリスト」 */
+	List<AccountBean> outputList4 = new ArrayList<AccountBean>();
+	/** 「出力アカウントリスト」 */
+	List<AccountBean> outputList5 = new ArrayList<AccountBean>();
+	/** 「出力アカウントリスト」 */
+	List<AccountBean> outputList6 = new ArrayList<AccountBean>();
 	/** 「JavaScript」 */
 	JavascriptExecutor jse;
 	/** 「登録日付」 */
@@ -91,14 +101,13 @@ public class Chance_Url{
 			// Chromeドライバー
 			driver = new ChromeDriver();
 			jse = (JavascriptExecutor) driver;
-			// 「登録URL」
 			driver.get(PC_REGISTER_URL);
 			// 1.5秒待ち
 			sleep(1500);
 			// 仮登録
 			if(!this.register()){
 				// 出力アカウント情報を設定する
-				outputList.add(bean);
+				this.addList(i);
 				// ブラウザを終了する
 				driver.quit();
 				continue;
@@ -108,7 +117,7 @@ public class Chance_Url{
 			// メール確認
 			if(!this.mail_confirm()){
 				// 出力アカウント情報を設定する
-				outputList.add(bean);
+				this.addList(i);
 				// ブラウザを終了する
 				driver.quit();
 				continue;
@@ -122,16 +131,49 @@ public class Chance_Url{
 			// 登録日付を設定する
 			bean.setData(this.register_data);
 			// 出力アカウント情報を設定する
-			outputList.add(bean);
+			this.addList(i);
+			// Wifi再起動
 			this.wifiRestart();
 			// ブラウザを終了する
 			driver.quit();
 		}
 		// アカウント情報出力する
-		this.output_account();
+		this.output_account(this.outputList1, 13);
+		this.output_account(this.outputList2, 14);
+		this.output_account(this.outputList3, 15);
+		this.output_account(this.outputList4, 16);
+		this.output_account(this.outputList5, 17);
+		this.output_account(this.outputList6, 18);
 		return point_count;
 	}
 
+	/**
+	 * =================================================================================================================
+	 * チャンスイット：メール確認
+	 * =================================================================================================================
+	 *
+	 * @return Boolean 処理結果
+	 *
+	 * @author kimC
+	 *
+	 */
+	public void addList(int i) {
+		if(i < 10){
+			outputList1.add(bean);	
+		}else if(i >= 10 && i < 20){
+			outputList2.add(bean);
+		}else if(i >= 20 && i < 30){
+			outputList3.add(bean);
+		}else if(i >= 30 && i < 40){
+			outputList4.add(bean);
+		}else if(i >= 40 && i < 50){
+			outputList5.add(bean);
+		}else{
+			outputList6.add(bean);
+		}
+		
+	}
+	
 	/**
 	 * =================================================================================================================
 	 * 個人情報登録処理
@@ -404,13 +446,13 @@ public class Chance_Url{
 	 * @author kimC
 	 *
 	 */
-	public void output_account() {
+	public void output_account(List<AccountBean> list, Integer index) {
 		try{
 			Output output = new Output();
-			output.execute(outputList);
-			System.out.println("アカウント・WEB診断URL出力成功！");
+			output.execute(list, index);
+			System.out.println(index + "のWEB診断URL出力成功！");
 		}catch (Exception e) {
-			System.out.println("【エラー】：アカウント・WEB診断URL出力失敗！");
+			System.out.println("【エラー】：" + index + "のWEB診断URL出力失敗！");
 		}
 	}
 

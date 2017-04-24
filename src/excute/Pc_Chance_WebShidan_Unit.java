@@ -15,9 +15,9 @@ public class Pc_Chance_WebShidan_Unit {
 
 	public static void main(String[] args) {
 		// チャンスイット：WEB診断単体
-		Chance_Unit_Shindan chance_unit_shindan= new Chance_Unit_Shindan(args[0]);
+		Chance_Unit_Shindan chance_unit_shindan= new Chance_Unit_Shindan();
 		Unit_Shindan shindan = new Unit_Shindan();
-		chance_unit_shindan.execute(shindan.execute("WEB診断URL_単体"));
+		chance_unit_shindan.execute(shindan.execute(args[0]));
 		System.out.println("【チャンスイット】WEB診断終了。");
 	}
 

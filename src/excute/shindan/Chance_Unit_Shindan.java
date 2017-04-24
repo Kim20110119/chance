@@ -39,17 +39,14 @@ public class Chance_Unit_Shindan{
 	AccountBean bean = new AccountBean();
 	/** 「WEB診断Index」 */
 	int index = 0;
-	/** 「画像表示設定フラグ」 */
-	String image_flag = StringUtils.EMPTY;
 
 	/**
 	 * コンストラクタ
 	 * @param String path パス
 	 */
-	public Chance_Unit_Shindan(String flag) {
+	public Chance_Unit_Shindan() {
 		// Chromeドライバーをプロパティへ設定
 		System.setProperty("webdriver.chrome.driver", "lib/chromedriver.exe");
-		this.image_flag = flag;
 	}
 
 	/**
@@ -77,9 +74,7 @@ public class Chance_Unit_Shindan{
 			// Chromeドライバーオプション
 			driver = new ChromeDriver();
 			// Chromeの画像表示設定
-			if(this.image_flag.equals("1")){
-				this.setImage();
-			}
+			this.setImage();
 			// 「WEB診断URL」を取得する
 			this.shindan_list_url = bean.getUrl();
 			// WEB診断一覧へ遷移する
@@ -128,23 +123,6 @@ public class Chance_Unit_Shindan{
 
 		}
 	}
-
-	/**
-	 * =================================================================================================================
-	 * WEB診断URLを取得する
-	 * =================================================================================================================
-	 *
-	 * @author kimC
-	 *
-	 */
-	public void getShidanUrl() {
-		try{
-
-		}catch (Exception e){
-
-		}
-	}
-
 
 	/**
 	 * =================================================================================================================
