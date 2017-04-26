@@ -98,8 +98,11 @@ public class Chance_Unit_Shindan{
 				// 「WEB診断一覧」
 				this.setUrl(this.shindan_list_url);
 			}
-			// ブラウザドライバーを終了する
-			driver.quit();
+			try {
+				// ブラウザドライバーを終了する
+				driver.quit();
+			}catch(Exception q_e){
+			}
 		}
 
 		return 0;
