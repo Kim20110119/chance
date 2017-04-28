@@ -61,50 +61,66 @@ public class Chance_Unit_Shindan{
 	 */
 	public Integer execute(List<AccountBean> list) {
 		for (int account_index = 0; account_index < list.size(); account_index++) {
-			// アカウントBean
-			bean = list.get(account_index);
-			// 開始Index
-			if(StringUtils.isNotEmpty(bean.getStart())){
-				start = Integer.valueOf(bean.getStart());
-			}
-			// 終了Index
-			if(StringUtils.isNotEmpty(bean.getEnd())){
-				end = Integer.valueOf(bean.getEnd());
-			}
-			// Chromeドライバーオプション
-			driver = new ChromeDriver();
-			// Chromeの画像表示設定
-			this.setImage();
-			// 「WEB診断URL」を取得する
-			this.shindan_list_url = bean.getUrl();
-			// WEB診断一覧へ遷移する
-			this.setUrl(this.shindan_list_url);
-			// WEB診断開始
-			for (int i = start; i < end; i++) {
-				this.index = i;
-				try {
-					// 0.5秒待ち
-					sleep(500);
-					// 診断URL
-					String url = driver.findElements(By.xpath("//a[@role='button']")).get(i).getAttribute(A_HREF);
-					this.shindan_url = url.replace("start?&", "step?=undefined&");
-					// WEB診断
-					this.setUrl(this.shindan_url);
-					if (!start()) {
-						restart();
-					}
-				} catch (Exception e) {
+			try{
+				// アカウントBean
+				bean = list.get(account_index);
+				// 開始Index
+				if(StringUtils.isNotEmpty(bean.getStart())){
+					start = Integer.valueOf(bean.getStart());
 				}
-				// 「WEB診断一覧」
+				// 終了Index
+				if(StringUtils.isNotEmpty(bean.getEnd())){
+					end = Integer.valueOf(bean.getEnd());
+				}
+				// Chromeドライバーオプション
+				try{
+					driver = new ChromeDriver();
+				}catch(Exception s_e){
+					try{
+						driver = new ChromeDriver();
+					}catch(Exception r_s_e){
+						continue;
+					}
+				}
+				// Chromeの画像表示設定
+				this.setImage();
+				// 「WEB診断URL」を取得する
+				this.shindan_list_url = bean.getUrl();
+				// WEB診断一覧へ遷移する
 				this.setUrl(this.shindan_list_url);
-			}
-			try {
-				// ブラウザドライバーを終了する
-				driver.quit();
-			}catch(Exception q_e){
+				// WEB診断開始
+				for (int i = start; i < end; i++) {
+					this.index = i;
+					try {
+						// 0.5秒待ち
+						sleep(500);
+						// 診断URL
+						String url = driver.findElements(By.xpath("//a[@role='button']")).get(i).getAttribute(A_HREF);
+						this.shindan_url = url.replace("start?&", "step?=undefined&");
+						// WEB診断
+						this.setUrl(this.shindan_url);
+						if (!start()) {
+							restart();
+						}
+					} catch (Exception e) {
+					}
+					// 「WEB診断一覧」
+					this.setUrl(this.shindan_list_url);
+				}
+				try {
+					// ブラウザドライバーを終了する
+					driver.quit();
+				}catch(Exception q_e){
+				}
+			}catch(Exception m_e){
+				try {
+					// ブラウザドライバーを終了する
+					driver.quit();
+				}catch(Exception q_e){
+				}
+				continue;
 			}
 		}
-
 		return 0;
 
 	}
